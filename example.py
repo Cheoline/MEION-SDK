@@ -84,5 +84,28 @@ def test_meion():
     else:
         print(f"⚠️ Error al recuperar contexto para IA: {ai_context}")
 
+    print("\n" + "-"*60 + "\n")
+    time.sleep(1)
+
+    # 4. OPCIONAL: Subir y procesar imágenes cromáticas con ITOM
+    print("📸 4. Guía rápida para usar Procesamiento Cromático Molecular (ITOM):")
+    print("   El SDK ahora soporta subir imágenes desde tus agentes autónomos.")
+    print("   Código de ejemplo (comentado para evitar errores de archivo):")
+    print("""
+    # # Subir una imagen cromática para ser atomizada a formato .itom:
+    # print("Subiendo imagen...")
+    # res_img = client.upload_image("ruta/a/mi_imagen.png")
+    # if res_img.get("status") == "success":
+    #     itom_filename = res_img.get("filename")
+    #     print(f"Imagen atomizada con éxito en: {itom_filename}")
+    #     
+    #     # Guardar recuerdo de texto enlazado a la imagen cromática:
+    #     texto_enlazado = f"Este es el diseño de mi nuevo prototipo. [IMAGEN_ASOCIADA: {itom_filename}]"
+    #     client.memorize(texto_enlazado)
+    #
+    # # Descargar la imagen reconstruida o comprimida desde tu IA:
+    # client.download_image(itom_filename, "descargas/prototipo_restaurado.png")
+    """)
+
 if __name__ == "__main__":
     test_meion()

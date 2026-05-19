@@ -125,3 +125,57 @@ class MeionClient:
                 "status": "error",
                 "message": f"Fallo al eliminar recuerdo: {e}"
             }
+
+    def upload_image(self, file_path):
+        """
+        Sube una imagen al servidor de MEION para ser procesada y comprimida cromáticamente a formato .itom.
+        
+        :param file_path: Ruta local del archivo de imagen (PNG, JPG, JPEG, etc.).
+        :return: Diccionario con el resultado de la compresión cromática, incluyendo el nombre de archivo .itom generado.
+        """
+        if not file_path or not os.path.exists(file_path):
+            raise FileNotFoundError(f"No se pudo encontrar el archivo de imagen especificado: {file_path}")
+            
+        url = f"{self.server_url}/api/itom/compress"
+        headers = {
+            "X-API-Key": self.api_key
+        }
+        
+        try:
+            with open(file_path, 'rb') as f:
+                files = {'file': (os.path.basename(file_path), f)}
+                response = requests.post(url, files=files, headers=headers)
+                response.raise_for_status()
+                return response.json()
+        except requests.exceptions.RequestException as e:
+            return {
+                "status": "error",
+                "message": f"Fallo al subir y comprimir imagen cromática: {e}"
+            }
+
+    def download_image(self, filename, output_path):
+        """
+        Descarga una imagen (comprimida .itom o reconstruida .png) desde el servidor de MEION.
+        
+        :param filename: El nombre de archivo en el servidor (ej: 'decompressed_abc.png' o 'abc.itom').
+        :param output_path: Ruta local donde se guardará el archivo descargado.
+        :return: True si la descarga fue exitosa, o un diccionario con el error.
+        """
+        if not filename:
+            raise ValueError("El nombre del archivo a descargar no puede estar vacío.")
+            
+        url = f"{self.server_url}/api/itom/download/{filename}"
+        params = {"api_key": self.api_key}
+        
+        try:
+            response = requests.get(url, params=params, stream=True)
+            response.raise_for_status()
+            with open(output_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            return True
+        except requests.exceptions.RequestException as e:
+            return {
+                "status": "error",
+                "message": f"Fallo al descargar archivo: {e}"
+            }
