@@ -102,3 +102,26 @@ class MeionClient:
                 "status": "error",
                 "message": f"Fallo al recuperar métricas: {e}"
             }
+
+    def delete_memory(self, uuid):
+        """
+        Elimina un recuerdo del cerebro molecular mediante su UUID único.
+        
+        :param uuid: El identificador único del recuerdo a eliminar.
+        :return: Diccionario con el resultado de la eliminación.
+        """
+        if not uuid:
+            raise ValueError("El UUID del recuerdo a eliminar no puede estar vacío.")
+            
+        url = f"{self.server_url}/api/memory/delete"
+        payload = {"uuid": uuid}
+        
+        try:
+            response = requests.post(url, json=payload, headers=self._get_headers())
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            return {
+                "status": "error",
+                "message": f"Fallo al eliminar recuerdo: {e}"
+            }
