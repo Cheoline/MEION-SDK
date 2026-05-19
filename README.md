@@ -123,4 +123,12 @@ Si deseas conectar tus aplicaciones en **Node.js, Go, PHP o Rust**, puedes consu
 
 ---
 
+## 🗺️ Visualiza Cómo Funciona MEION (Diagrama de Arquitectura)
+
+Para comprender en detalle técnico y visual cómo viaja y se almacena tu información, desde el conector del SDK hasta el procesamiento cromático (ITOM) y el motor topológico (QTOM V5), consulta nuestro mapa interactivo de arquitectura del sistema:
+
+👉 **[Ver Diagrama de Arquitectura Detallado (Mermaid & Explicación)](./arquitectura_sistema_meion.md)**
+
+---
+
 *Desarrollado y optimizado por el equipo de ingeniería de **MEIONia**.*
